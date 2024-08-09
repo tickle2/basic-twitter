@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Feed</title>
+  <!-- boostrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- css -->
+  <link href="css/styles.css" rel="stylesheet">
+  <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/4af5eae8db.js" crossorigin="anonymous"></script>
+  <style>
+    .pfp {
+      width: 42px;
+      height: 42px;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            {% for follower in followers_list %}
+                {% if follower in mutual %}
+                <div class="border">
+                    <div class="media mt-3 mb-3 pl-2">
+                        <img class="mr-1 rounded-circle pfp" src="{{ url_for('static', filename='img/pfp_' ~ follower[0] | string ~ '.png') }}" alt="">
+                        <div class="media-body">
+                           <span class="row">
+                            <span class="col-8">
+                                <h5 class="mt-0 mb-0">{{ follower[1] }}</h5>
+                            <h6 class="text-secondary">{{ follower[0] }}</h6>
+                            </span>
+                            <span  class="col-2 mt-2 ml-2">
+                                <form action="/followers" method="post">
+                                    <button class="btn btn-dark btn-sm hover-effect" type="submit" name="unfollow" value="{{ follower[0] }}">unfollow</button>
+                                </form>
+                            </span>
+                           </span>
+                           {{ follower[2] }}
+                        </div>
+                      </div>
+                    </div>
+            {% else %}
+            <div class="border">
+                <div class="media mt-3 mb-3 pl-2">
+                    <img class="mr-1 rounded-circle pfp" src="{{ url_for('static', filename='img/pfp_' ~ follower[0] | string ~ '.png') }}" alt="">
+                    <div class="media-body">
+                       <span class="row">
+                        <span class="col-8">
+                            <h5 class="mt-0 mb-0">{{ follower[1] }}</h5>
+                        <h6 class="text-secondary">{{ follower[0] }}</h6>
+                        </span>
+                        <span  class="col-2 mt-2 ml-2">
+                            <form action="/followers" method="post">
+                                <button class="btn btn-dark btn-sm hover-effect" type="submit" name="follow" value="{{ follower[0] }}">follow</button>
+                            </form>
+                        </span>
+                       </span>
+                       {{ follower[2] }}
+                    </div>
+                  </div>
+                </div>
+            {% endif %}
+        {% endfor %}           
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html> 

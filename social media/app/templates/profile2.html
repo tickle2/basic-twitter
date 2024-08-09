@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="profile-container">
+    <div class="profile-picture">
+        <img src="{{ url_for('static', filename='img/pfp_' + username + '.png' )}}"  alt="profile picture">
+    </div>
+    <div class="profile-info">
+        <p>{{ name }} {{ username }}</p>
+        <p>message &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; follow</p>
+        <p>  <b>{{ followers }}</b> <a href="followers">followers</a>  
+        <b>{{ following }}</b> <a href="following"> following</a></p>
+        </br>
+        <p>{{ bio }}</p>
+    </div>
+</div>
+
+<div class="post-container">
+    {% for post in posts %}
+    <div class="post">
+        <div class="post-image">
+            {% if post[4] == 1 %}
+            <img src="{{ url_for('static', filename='img/post_' + post[1] | string + '.png') }}">
+            {% endif %}
+        </div>
+        <div class="post-text">
+            <p>{{ post[3] }}</p>
+        </div>
+    </div>
+    {% if loop.index % 3 == 0 %}
+    </div><div class="post-container">
+    {% endif %}
+    {% endfor %}
+</div>
+</body>
+</html>
